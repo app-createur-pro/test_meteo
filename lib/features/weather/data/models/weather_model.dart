@@ -41,6 +41,7 @@ class WeatherCurrent {
 
   factory WeatherCurrent.fromJson(Map<String, dynamic> json) =>
       _$WeatherCurrentFromJson(json);
+
   Map<String, dynamic> toJson() => _$WeatherCurrentToJson(this);
 }
 

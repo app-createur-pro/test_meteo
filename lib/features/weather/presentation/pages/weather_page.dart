@@ -41,7 +41,7 @@ class _WeatherContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final current = weather.current;
-    final hourly = weather.hourly.take(6).toList();
+    final hourly = weather.hourly; // ✅ Passe toute la liste sans la tronquer !
 
     return SingleChildScrollView(
       padding: const EdgeInsets.all(16),
@@ -65,7 +65,7 @@ class _WeatherContent extends StatelessWidget {
           const SizedBox(height: 20),
           _WeatherMetrics(current),
           const SizedBox(height: 20),
-          HourlyForecast(hourly),
+          HourlyForecast(hourly), // ✅ Passe toute la liste à HourlyForecast
         ],
       ),
     );

@@ -21,28 +21,38 @@ class HourlyForecastState extends State<HourlyForecast> {
   @override
   void initState() {
     super.initState();
-    _displayedHours = widget.hourly.take(_loadedHours).toList();
+    _displayedHours = List.from(widget.hourly.take(_loadedHours));
     _scrollController.addListener(_onScroll);
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
   }
 
   void _onScroll() {
     if (_scrollController.position.pixels >=
-        _scrollController.position.maxScrollExtent - 50) {
+            _scrollController.position.maxScrollExtent - 50 &&
+        !_isLoading) {
       _loadMoreHours();
     }
   }
 
   void _loadMoreHours() {
-    if (_isLoading || _loadedHours >= widget.hourly.length) return;
+    if (_loadedHours >= widget.hourly.length) return;
 
     setState(() {
       _isLoading = true;
     });
 
     Future.delayed(const Duration(seconds: 1), () {
+      if (!mounted) return;
+
       setState(() {
-        _loadedHours = (_loadedHours + 6).clamp(0, widget.hourly.length);
-        _displayedHours = widget.hourly.take(_loadedHours).toList();
+        final int newHours = (_loadedHours + 6).clamp(0, widget.hourly.length);
+        _displayedHours.addAll(widget.hourly.getRange(_loadedHours, newHours));
+        _loadedHours = newHours;
         _isLoading = false;
       });
     });
@@ -67,11 +77,9 @@ class HourlyForecastState extends State<HourlyForecast> {
                   itemCount: _displayedHours.length + (_isLoading ? 1 : 0),
                   itemBuilder: (context, index) {
                     if (index >= _displayedHours.length) {
-                      return const Center(
-                        child: Padding(
-                          padding: EdgeInsets.all(8.0),
-                          child: CircularProgressIndicator(),
-                        ),
+                      return const SizedBox(
+                        width: 80,
+                        child: Center(child: CircularProgressIndicator()),
                       );
                     }
                     return _HourlyCard(_displayedHours[index]);
@@ -97,7 +105,7 @@ class _HourlyCard extends StatelessWidget {
     return Container(
       width: 80,
       padding: const EdgeInsets.all(8),
-      margin: const EdgeInsets.all(8),
+      margin: const EdgeInsets.symmetric(horizontal: 6),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(12),
