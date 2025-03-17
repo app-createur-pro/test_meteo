@@ -1,0 +1,4 @@
+enum Flavor {
+  mock,
+  prod,
+}
