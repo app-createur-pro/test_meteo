@@ -1,3 +1,7 @@
 {
-  "app_name": "Meteo"
+  "app_name": "Meteo",
+  "hourly_forecast": "Hourly forecast",
+  "humidity": "Humidity",
+  "uv_index": "UV Index",
+  "wind": "Wind"
 }

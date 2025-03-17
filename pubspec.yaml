@@ -14,26 +14,35 @@ dependencies:
   easy_localization: ^3.0.7+1
   flutter:
     sdk: flutter
+  #http queries
+  dio: ^5.8.0+1
   #read env file
   flutter_dotenv: ^5.2.1
   #state management
   flutter_riverpod: ^2.6.1
   #routes
   go_router: ^14.8.1
+  json_annotation: ^4.9.0
+  flutter_svg: ^2.0.17
+  intl: ^0.19.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
   flutter_lints: ^3.0.0
+  build_runner: ^2.4.11
+  json_serializable: ^6.8.0
 
 flutter:
 
   uses-material-design: true
 
   assets:
+    - assets/mocks/weather_mock.json
     - assets/translations/
     - .env
+
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
 

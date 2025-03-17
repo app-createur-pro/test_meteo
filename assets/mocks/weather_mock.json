@@ -1,0 +1,50 @@
+{
+  "lat": 48.8566,
+  "lon": 2.3522,
+  "timezone": "Europe/Paris",
+  "current": {
+    "temp": 15.0,
+    "humidity": 80,
+    "uvi": 5.5,
+    "wind_speed": 10.0,
+    "weather": [
+      {
+        "main": "Clouds",
+        "description": "Ciel partiellement nuageux",
+        "icon": "04d"
+      }
+    ]
+  },
+  "hourly": [
+    {
+      "dt": 1710679200,
+      "temp": 16.0,
+      "weather": [{"main": "Clear", "description": "Ciel dégagé", "icon": "01d"}]
+    },
+    {
+      "dt": 1710682800,
+      "temp": 17.5,
+      "weather": [{"main": "Clouds", "description": "Nuageux", "icon": "02d"}]
+    },
+    {
+      "dt": 1710686400,
+      "temp": 18.0,
+      "weather": [{"main": "Clouds", "description": "Partiellement nuageux", "icon": "03d"}]
+    },
+    {
+      "dt": 1710690000,
+      "temp": 18.5,
+      "weather": [{"main": "Clouds", "description": "Nuageux", "icon": "04d"}]
+    },
+    {
+      "dt": 1710693600,
+      "temp": 19.0,
+      "weather": [{"main": "Rain", "description": "Légère pluie", "icon": "10d"}]
+    },
+    {
+      "dt": 1710697200,
+      "temp": 18.5,
+      "weather": [{"main": "Rain", "description": "Averses", "icon": "09d"}]
+    }
+  ]
+}

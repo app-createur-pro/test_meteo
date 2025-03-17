@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:test_meteo/core/config/app_config.dart';
 import 'package:test_meteo/core/config/flavor.dart';
 import 'package:test_meteo/core/navigation/locales.dart';
@@ -19,10 +20,11 @@ Future<void> initApp() async {
 
   runApp(
     EasyLocalization(
-      supportedLocales: locales,
-      path: 'assets/translations',
-      fallbackLocale: localeEn,
-      child: const App(),
-    ),
+        supportedLocales: locales,
+        path: 'assets/translations',
+        fallbackLocale: localeEn,
+        child: const ProviderScope(
+          child: App(),
+        )),
   );
 }
