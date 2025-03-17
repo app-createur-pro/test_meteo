@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:test_meteo/core/config/app_config.dart';
+import 'package:test_meteo/core/config/flavor.dart';
 import 'package:test_meteo/features/weather/data/models/weather_model.dart';
 import 'package:test_meteo/features/weather/presentation/providers/weather_provider.dart';
 import 'package:test_meteo/features/weather/presentation/widgets/weather_icon.dart';
@@ -20,7 +21,7 @@ class WeatherPage extends ConsumerWidget {
       appBar: AppBar(
         backgroundColor: Colors.blueAccent,
         title: Text(
-          "${'app_name'.tr()} ${AppConfig.isMock ? "MOCK" : "PROD"}",
+          getAppTitle(),
           style: const TextStyle(color: Colors.white),
         ),
         centerTitle: true,
@@ -82,8 +83,10 @@ class _WeatherMetrics extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         _MetricCard("humidity".tr(), "${current.humidity}%", Icons.water_drop),
-        _MetricCard("uv_index".tr(), "${current.uvi}", Icons.wb_sunny),
-        _MetricCard("wind".tr(), "${current.wind_speed} m/s", Icons.air),
+        _MetricCard(
+            "uv_index".tr(), current.uvi.toStringAsFixed(2), Icons.wb_sunny),
+        _MetricCard("wind".tr(), "${current.wind_speed.toStringAsFixed(2)} m/s",
+            Icons.air),
       ],
     );
   }
@@ -107,5 +110,16 @@ class _MetricCard extends StatelessWidget {
         Text(title, style: const TextStyle(fontSize: 14, color: Colors.grey)),
       ],
     );
+  }
+}
+
+String getAppTitle() {
+  switch (AppConfig.instance.flavor) {
+    case Flavor.mock:
+      return "${'app_name'.tr()} MOCK";
+    case Flavor.dartServer:
+      return "${'app_name'.tr()} SERVER";
+    case Flavor.prod:
+      return "${'app_name'.tr()} PROD";
   }
 }

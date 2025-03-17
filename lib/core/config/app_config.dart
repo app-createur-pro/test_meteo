@@ -6,6 +6,7 @@ class AppConfig {
   final Flavor flavor;
   final String apiKey;
   static late AppConfig instance;
+  static bool useDartServer = true;
 
   AppConfig._internal(this.flavor, this.apiKey);
 
