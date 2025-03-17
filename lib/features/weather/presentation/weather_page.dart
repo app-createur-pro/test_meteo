@@ -1,7 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-
-import '../../../core/flavors/flavors_config.dart';
+import 'package:test_meteo/core/config/app_config.dart';
 
 class WeatherPage extends StatelessWidget {
   const WeatherPage({super.key});
@@ -10,11 +9,10 @@ class WeatherPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-            "${'app_name'.tr()} ${FlavorsConfig.isMock ? "MOCK" : "PROD"}"),
+        title: Text("${'app_name'.tr()} ${AppConfig.isMock ? "MOCK" : "PROD"}"),
       ),
       body: Center(
-        child: Text(FlavorsConfig.isMock ? "MOCK" : "PROD"),
+        child: Text(AppConfig.isMock ? "MOCK" : "PROD"),
       ),
     );
   }
