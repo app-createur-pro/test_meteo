@@ -1,11 +1,12 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
+import 'package:test_meteo/core/config/app_config.dart';
+import 'package:test_meteo/features/weather/data/models/weather_model.dart';
 import 'package:test_meteo/features/weather/presentation/providers/weather_provider.dart';
+import 'package:test_meteo/features/weather/presentation/widgets/weather_icon.dart';
 
-import '../../../../core/config/app_config.dart';
-import '../../data/models/weather_model.dart';
+import '../widgets/hourly_forecast.dart';
 
 class WeatherPage extends ConsumerWidget {
   const WeatherPage({super.key});
@@ -52,7 +53,7 @@ class _WeatherContent extends StatelessWidget {
             style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 10),
-          _WeatherIcon(current.weather.first.icon),
+          WeatherIcon(current.weather.first.icon),
           Text(
             "${current.temp.toInt()}°C",
             style: const TextStyle(fontSize: 48, fontWeight: FontWeight.bold),
@@ -64,23 +65,9 @@ class _WeatherContent extends StatelessWidget {
           const SizedBox(height: 20),
           _WeatherMetrics(current),
           const SizedBox(height: 20),
-          _HourlyForecast(hourly),
+          HourlyForecast(hourly),
         ],
       ),
-    );
-  }
-}
-
-class _WeatherIcon extends StatelessWidget {
-  final String iconCode;
-  const _WeatherIcon(this.iconCode);
-
-  @override
-  Widget build(BuildContext context) {
-    return Image.network(
-      "https://openweathermap.org/img/wn/$iconCode@2x.png",
-      width: 100,
-      height: 100,
     );
   }
 }
@@ -119,63 +106,6 @@ class _MetricCard extends StatelessWidget {
             style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
         Text(title, style: const TextStyle(fontSize: 14, color: Colors.grey)),
       ],
-    );
-  }
-}
-
-class _HourlyForecast extends StatelessWidget {
-  final List<WeatherHourly> hourly;
-  const _HourlyForecast(this.hourly);
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text("hourly_forecast".tr(),
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-        const SizedBox(height: 10),
-        SizedBox(
-          height: 200,
-          child: ListView.separated(
-            scrollDirection: Axis.horizontal,
-            itemCount: hourly.length,
-            separatorBuilder: (_, __) => const SizedBox(width: 10),
-            itemBuilder: (context, index) {
-              final hour = hourly[index];
-              return _HourlyCard(hour);
-            },
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-class _HourlyCard extends StatelessWidget {
-  final WeatherHourly hour;
-  const _HourlyCard(this.hour);
-
-  @override
-  Widget build(BuildContext context) {
-    final time = DateFormat.Hm()
-        .format(DateTime.fromMillisecondsSinceEpoch(hour.dt * 1000));
-    return Container(
-      width: 80,
-      padding: const EdgeInsets.all(8),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(12),
-        boxShadow: const [BoxShadow(color: Colors.black26, blurRadius: 5)],
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(time, style: const TextStyle(fontWeight: FontWeight.bold)),
-          _WeatherIcon(hour.weather.first.icon),
-          Text("${hour.temp.toInt()}°C", style: const TextStyle(fontSize: 16)),
-        ],
-      ),
     );
   }
 }

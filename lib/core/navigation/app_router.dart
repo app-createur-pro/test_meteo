@@ -1,6 +1,5 @@
 import 'package:go_router/go_router.dart';
-
-import '../../features/weather/presentation/screens/weather_page.dart';
+import 'package:test_meteo/features/weather/presentation/pages/weather_page.dart';
 
 class AppRouter {
   static final GoRouter router = GoRouter(
