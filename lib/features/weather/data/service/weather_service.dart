@@ -37,10 +37,65 @@ class WeatherService {
     }
   }
 
+  /// 📌 Charge les données Mock depuis les fichiers CSV
   Future<WeatherModel> _fetchMockWeather() async {
-    final String jsonString =
-        await rootBundle.loadString('assets/mocks/weather_mock.json');
-    final Map<String, dynamic> jsonData = jsonDecode(jsonString);
-    return WeatherModel.fromJson(jsonData);
+    final currentWeather = await _loadCurrentWeather();
+    final hourlyForecast = await _loadHourlyForecast();
+
+    return WeatherModel(
+      lat: 48.8566,
+      lon: 2.3522,
+      timezone: "Europe/Paris",
+      current: currentWeather,
+      hourly: hourlyForecast,
+    );
+  }
+
+  /// 🔹 Charge les données actuelles depuis `weather_current.csv`
+  Future<WeatherCurrent> _loadCurrentWeather() async {
+    final String csvString =
+        await rootBundle.loadString('assets/mocks/weather_current.csv');
+    final List<String> lines = csvString.split('\n');
+
+    if (lines.length < 2) throw Exception("Fichier CSV vide ou mal formaté");
+
+    final List<String> values = lines[1].split(',');
+    return WeatherCurrent(
+      temp: double.parse(values[0]),
+      humidity: int.parse(values[1]),
+      uvi: double.parse(values[2]),
+      wind_speed: double.parse(values[3]),
+      weather: [
+        WeatherCondition(
+          main: values[4],
+          description: values[5],
+          icon: values[6],
+        )
+      ],
+    );
+  }
+
+  /// 🔹 Charge les prévisions horaires depuis `weather_hourly.csv`
+  Future<List<WeatherHourly>> _loadHourlyForecast() async {
+    final String csvString =
+        await rootBundle.loadString('assets/mocks/weather_hourly.csv');
+    final List<String> lines = csvString.split('\n');
+
+    if (lines.length < 2) throw Exception("Fichier CSV vide ou mal formaté");
+
+    return lines.skip(1).map((line) {
+      final values = line.split(',');
+      return WeatherHourly(
+        dt: int.parse(values[0]),
+        temp: double.parse(values[1]),
+        weather: [
+          WeatherCondition(
+            main: values[2],
+            description: values[3],
+            icon: values[4],
+          )
+        ],
+      );
+    }).toList();
   }
 }

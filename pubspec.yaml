@@ -39,7 +39,8 @@ flutter:
   uses-material-design: true
 
   assets:
-    - assets/mocks/weather_mock.json
+    - assets/mocks/weather_current.csv
+    - assets/mocks/weather_hourly.csv
     - assets/translations/
     - .env
 

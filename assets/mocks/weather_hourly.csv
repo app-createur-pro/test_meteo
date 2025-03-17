@@ -1,0 +1,10 @@
+dt,temp,weather_main,weather_description,weather_icon
+1710679200,16.0,Clear,Ciel dégagé,01d
+1710682800,17.5,Clouds,Nuageux,02d
+1710686400,18.0,Clouds,Partiellement nuageux,03d
+1710690000,18.5,Clouds,Nuageux,04d
+1710693600,19.0,Rain,Légère pluie,10d
+1710697200,18.5,Rain,Averses,09d
+1710700800,17.8,Clouds,Partiellement nuageux,03d
+1710704400,17.2,Clouds,Nuageux,04d
+1710708000,16.8,Clear,Ciel dégagé,01n
